@@ -1,7 +1,15 @@
-import { createReducer } from '@reduxjs/toolkit';
+// import { createReducer } from '@reduxjs/toolkit';
 import { addContact, deleteContact, filterContact } from './actions.js';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-export const contactsReducer = createReducer(
+const persistConfig = {
+  key: 'contacts',
+  storage,
+};
+
+export const contactsReducer = persistReducer(
+  persistConfig,
   {
     items: JSON.parse(window.localStorage.getItem('contacts')) ?? [
       { id: 'id-1', name: 'Vladimir Zelenskiy', number: '253-32-45' },
